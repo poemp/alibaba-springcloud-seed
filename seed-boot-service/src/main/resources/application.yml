@@ -1,0 +1,35 @@
+server:
+  port: ${global.seed-boot-service.port}
+spring:
+  profiles:
+    include: global
+  application:
+    name: ${global.seed-boot-service.server-name}
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${global.nacos.server-addr}
+  security:
+    user:
+      name: ${global.seed-boot-service.username}
+      password: ${global.seed-boot-service.password}
+    boot:
+      admin:
+        ui:
+          # 修改网页显示的tab标题
+          title: ${global.seed-boot-service.title}
+          # 修改网页的brand的图标和标题
+          brand: "<span>${global.seed-boot-service.title}</span>"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: false

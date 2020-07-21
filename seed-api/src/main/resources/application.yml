@@ -1,0 +1,41 @@
+server:
+  port: ${global.seed-api.port}
+spring:
+  profiles:
+    include: global
+  application:
+    name: ${global.seed-api.server-name}
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${global.nacos.server-addr}
+  boot:
+    admin:
+      client:
+        url: http://${global.seed-boot-service.ip}:${global.seed-boot-service.port}
+        username: ${global.seed-boot-service.username}
+        password: ${global.seed-boot-service.password}
+        instance:
+          service-base-url: http://127.0.0.1:${global.seed-api.port}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: false
+
+feign:
+  httpclient:
+    connection-timeout: 60000
+  client:
+    config:
+      default:
+        connect-timeout: 60000
+        read-timeout: 60000

@@ -1,0 +1,70 @@
+server:
+  port: ${global.seed-auth.port}
+spring:
+  profiles:
+    include: global
+  application:
+    name: ${global.seed-auth.server-name}
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${global.nacos.server-addr}
+  datasource:
+    druid:
+      name: vinshine
+      # 连接池的配置信息
+      driver-class-name: ${global.datasource.service.driver-class-name}
+      url: ${global.datasource.service.url}
+      username: ${global.datasource.service.username}
+      password: ${global.datasource.service.password}
+      initial-size: 3
+      max-active: 20
+      min-idle: 1
+      max-wait: 6000
+      validation-query: select 'x'
+      validation-query-timeout: 15
+      test-on-borrow: false
+      test-while-idle: true
+      keep-alive: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      time-between-log-stats-millis: 300000
+      filter:
+        stat:
+          merge-sql: true
+          log-slow-sql: true
+          slow-sql-millis: 5000
+        commons-log:
+          statement-executable-sql-log-enable: true
+  flyway:
+    locations: classpath:db_migration
+    enabled: true
+  redis:
+    port: ${global.redis.port}
+    password: ${global.redis.password}
+    database: ${global.redis.database}
+    host: ${global.redis.host}
+  boot:
+    admin:
+      client:
+        url: http://${global.seed-boot-service.ip}:${global.seed-boot-service.port}
+        username: ${global.seed-boot-service.username}
+        password: ${global.seed-boot-service.password}
+        instance:
+          service-base-url: http://127.0.0.1:${global.seed-auth.port}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: false
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
