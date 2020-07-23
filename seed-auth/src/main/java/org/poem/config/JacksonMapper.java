@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.poem.config.jackson.BeanSerializerModifier;
 
 /**
  * 返回Long转换为String
@@ -26,6 +27,10 @@ public class JacksonMapper extends ObjectMapper {
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
         simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
         simpleModule.addSerializer(long.class, ToStringSerializer.instance);
+
+        // 为mapper注册一个带有SerializerModifier的Factory，此modifier主要做的事情为：当序列化类型为array，list、set时，当值为空时，序列化成[]
+        simpleModule.setSerializerModifier((new BeanSerializerModifier()));
+
         registerModule(simpleModule);
 
     }
