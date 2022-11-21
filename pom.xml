@@ -56,7 +56,7 @@
 
         <disruptor.version>3.4.2</disruptor.version>
         <mybatis-spring-boot-starter.version>1.3.4</mybatis-spring-boot-starter.version>
-        <xxl.job.version>2.0.2</xxl.job.version>
+        <xxl.job.version>2.3.1</xxl.job.version>
         <xxl.rpc.version>1.4.0</xxl.rpc.version>
         <knife4j.version>2.0.1</knife4j.version>
     </properties>
